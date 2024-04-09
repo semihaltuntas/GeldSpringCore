@@ -9,8 +9,7 @@ import org.springframework.test.jdbc.JdbcTestUtils;
 
 import java.math.BigDecimal;
 
-import static org.assertj.core.api.Assertions.as;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @JdbcTest
 @Import(MensRepository.class)
@@ -56,5 +55,59 @@ public class MensRepositoryTest {
         var aantalRecordsMetDeIdVanDeVerwijderedeMens =
                 JdbcTestUtils.countRowsInTableWhere(jdbcClient, MENSEN_TABLE, "id=" + id);
         assertThat(aantalRecordsMetDeIdVanDeVerwijderedeMens).isZero();
+    }
+
+    @Test
+    void findByIdMetBestaandeIdVindtEenMens() {
+        assertThat(mensRepository.findByID(mensRepository.idVanTestMens1()))
+                .hasValueSatisfying(
+                        mens -> assertThat(mens.getNaam()).isEqualTo("test1"));
+    }
+
+    @Test
+    void findByIdMetOnbestaandeIdVindtGeenMens() {
+        assertThat(mensRepository.findByID(Long.MAX_VALUE)).isEmpty();
+    }
+
+    @Test
+    void findAndLockByIdMetBestaandeIdVindtEenMens() {
+        assertThat(mensRepository.findAndLockByID(mensRepository.idVanTestMens1()))
+                .hasValueSatisfying(
+                        mens -> assertThat(mens.getNaam()).isEqualTo("test1"));
+    }
+
+    @Test
+    void findAndLockByIdMetOnbestaandeIdVindtGeenMens() {
+        assertThat(mensRepository.findAndLockByID(Long.MAX_VALUE)).isEmpty();
+    }
+
+    @Test
+    void updateWijzigtEenMens() {
+        var id = mensRepository.idVanTestMens1();
+        var mens = new Mens(id, "mens1", BigDecimal.TEN);
+        mensRepository.update(mens);
+        var aantalAangepasteRecords = JdbcTestUtils.countRowsInTableWhere(
+                jdbcClient, MENSEN_TABLE, "geld = 10 and id =" + id);
+        assertThat(aantalAangepasteRecords).isOne();
+    }
+
+    @Test
+    void updateOnbestaandeMensMislukt() {
+        assertThatExceptionOfType(MensNietGevondenException.class).isThrownBy(
+                () -> mensRepository.update(
+                        new Mens(Long.MAX_VALUE, "test3", BigDecimal.TEN)));
+    }
+
+    @Test
+    void findByGeldBetweenVindtDeJuisteMensen() {
+        var van = BigDecimal.ONE;
+        var tot = BigDecimal.TEN;
+        var aantalRecords = JdbcTestUtils.countRowsInTableWhere(
+                jdbcClient, MENSEN_TABLE, "geld between 1 and 10");
+        assertThat(mensRepository.findByGeldBetween(van, tot))
+                .hasSize(aantalRecords)
+                .extracting(Mens::getGeld)
+                .allSatisfy(geld -> assertThat(geld).isBetween(van, tot))
+                .isSorted();
     }
 }
