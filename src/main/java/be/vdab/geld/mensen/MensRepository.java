@@ -116,4 +116,10 @@ public class MensRepository {
                 .query(Mens.class)
                 .optional();
     }
+    public long idVanTestMens1() {
+        return jdbcClient.sql(
+                "select id from mensen where naam = 'test1'")
+                .query(Long.class)
+                .single();
+    }
 }
