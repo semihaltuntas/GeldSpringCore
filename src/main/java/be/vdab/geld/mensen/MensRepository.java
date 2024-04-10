@@ -2,11 +2,12 @@ package be.vdab.geld.mensen;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public class MensRepository {
     private final JdbcClient jdbcClient;
 
