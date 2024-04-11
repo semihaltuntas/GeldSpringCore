@@ -1,5 +1,6 @@
 package be.vdab.geld.mensen;
 
+import be.vdab.geld.mensen.exceptions.MensNietGevondenException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package be.vdab.geld.mensen;
+package be.vdab.geld.mensen.exceptions;
 
 public class MensNietGevondenException  extends RuntimeException{
     private final long id;
