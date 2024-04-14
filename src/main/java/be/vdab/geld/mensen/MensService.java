@@ -12,9 +12,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MensService {
     private final MensRepository mensRepository;
+    private final SchenkingRepository schenkingRepository;
 
-    public MensService(MensRepository mensRepository) {
+    public MensService(MensRepository mensRepository, SchenkingRepository schenkingRepository) {
         this.mensRepository = mensRepository;
+        this.schenkingRepository = schenkingRepository;
     }
 
     public List<Mens> findAll() {
@@ -37,5 +39,7 @@ public class MensService {
         vanMens.schenk(aanMens, schenking.getBedrag());
         mensRepository.update(vanMens);
         mensRepository.update(aanMens);
+       // Die voegt een record toe aan de table schenkingen:
+        schenkingRepository.create(schenking);
     }
 }
