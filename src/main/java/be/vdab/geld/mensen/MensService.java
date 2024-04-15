@@ -1,9 +1,9 @@
 package be.vdab.geld.mensen;
 
-import be.vdab.geld.mensen.MensRepository;
-import be.vdab.geld.mensen.exceptions.MensNietGevondenException;
+import be.vdab.geld.exceptions.MensNietGevondenException;
+import be.vdab.geld.schenking.Schenking;
+import be.vdab.geld.schenking.SchenkingRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

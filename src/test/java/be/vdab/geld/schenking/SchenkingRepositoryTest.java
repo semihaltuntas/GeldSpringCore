@@ -1,5 +1,7 @@
-package be.vdab.geld.mensen;
+package be.vdab.geld.schenking;
 
+import be.vdab.geld.schenking.Schenking;
+import be.vdab.geld.schenking.SchenkingRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;

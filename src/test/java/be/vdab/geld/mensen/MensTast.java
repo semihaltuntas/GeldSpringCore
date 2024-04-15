@@ -1,6 +1,6 @@
 package be.vdab.geld.mensen;
 
-import be.vdab.geld.mensen.exceptions.OnvoldoendeGeldException;
+import be.vdab.geld.exceptions.OnvoldoendeGeldException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

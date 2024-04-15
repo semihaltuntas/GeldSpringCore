@@ -1,4 +1,4 @@
-package be.vdab.geld.mensen;
+package be.vdab.geld.schenking;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;

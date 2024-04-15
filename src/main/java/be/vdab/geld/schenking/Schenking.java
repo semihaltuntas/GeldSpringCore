@@ -1,4 +1,4 @@
-package be.vdab.geld.mensen;
+package be.vdab.geld.schenking;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

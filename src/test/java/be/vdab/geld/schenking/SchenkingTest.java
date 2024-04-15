@@ -1,5 +1,6 @@
-package be.vdab.geld.mensen;
+package be.vdab.geld.schenking;
 
+import be.vdab.geld.schenking.Schenking;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

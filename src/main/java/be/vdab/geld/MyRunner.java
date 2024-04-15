@@ -1,14 +1,12 @@
 package be.vdab.geld;
 
-import be.vdab.geld.mensen.Mens;
 import be.vdab.geld.mensen.MensService;
-import be.vdab.geld.mensen.Schenking;
-import be.vdab.geld.mensen.exceptions.MensNietGevondenException;
-import be.vdab.geld.mensen.exceptions.OnvoldoendeGeldException;
+import be.vdab.geld.schenking.Schenking;
+import be.vdab.geld.exceptions.MensNietGevondenException;
+import be.vdab.geld.exceptions.OnvoldoendeGeldException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 @Component
