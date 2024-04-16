@@ -1,5 +1,6 @@
 package be.vdab.geld.mensen;
 
+import be.vdab.geld.SchenkStatistiekPerMens;
 import be.vdab.geld.exceptions.MensNietGevondenException;
 import be.vdab.geld.schenking.Schenking;
 import be.vdab.geld.schenking.SchenkingRepository;
@@ -41,5 +42,9 @@ public class MensService {
         mensRepository.update(aanMens);
        // Die voegt een record toe aan de table schenkingen:
         schenkingRepository.create(schenking);
+    }
+
+    public List<SchenkStatistiekPerMens> findSchenkStatistiekPerMens(){
+        return mensRepository.findSchenkStatistiekPerMens();
     }
 }

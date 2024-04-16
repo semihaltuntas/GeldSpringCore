@@ -20,24 +20,27 @@ public class MyRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Id van mens:");
-        var vanMensId = scanner.nextInt();
-        System.out.println("Id aan mens:");
-        var aanMensId = scanner.nextInt();
-        System.out.println("Het bedrag:");
-        var bedrag = scanner.nextBigDecimal();
-        try {
-            var schenking = new Schenking(vanMensId, aanMensId, bedrag);
-            mensService.schenk(schenking);
-            System.out.println("Schenking gelukt");
-        } catch (IllegalArgumentException ex) {
-            System.err.println(ex.getMessage());
-        } catch (MensNietGevondenException ex) {
-            System.err.println("Schenking mislukt. Mens ontbreekt. Id:" + ex.getId());
-        } catch (OnvoldoendeGeldException ex) {
-            System.err.println("Schenking mislukt. Onvoldoende geld.");
-        }
+        mensService.findSchenkStatistiekPerMens().forEach(System.out::println);
+
+         //3.Code
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Id van mens:");
+//        var vanMensId = scanner.nextInt();
+//        System.out.println("Id aan mens:");
+//        var aanMensId = scanner.nextInt();
+//        System.out.println("Het bedrag:");
+//        var bedrag = scanner.nextBigDecimal();
+//        try {
+//            var schenking = new Schenking(vanMensId, aanMensId, bedrag);
+//            mensService.schenk(schenking);
+//            System.out.println("Schenking gelukt");
+//        } catch (IllegalArgumentException ex) {
+//            System.err.println(ex.getMessage());
+//        } catch (MensNietGevondenException ex) {
+//            System.err.println("Schenking mislukt. Mens ontbreekt. Id:" + ex.getId());
+//        } catch (OnvoldoendeGeldException ex) {
+//            System.err.println("Schenking mislukt. Onvoldoende geld.");
+//        }
 
         // 2.Code
 //        var scanner = new Scanner(System.in);

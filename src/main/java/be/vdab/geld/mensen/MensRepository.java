@@ -1,5 +1,6 @@
 package be.vdab.geld.mensen;
 
+import be.vdab.geld.SchenkStatistiekPerMens;
 import be.vdab.geld.exceptions.MensNietGevondenException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -123,5 +124,18 @@ public class MensRepository {
                 "select id from mensen where naam = 'test1'")
                 .query(Long.class)
                 .single();
+    }
+    public List<SchenkStatistiekPerMens> findSchenkStatistiekPerMens(){
+        var sql = """
+                select mensen.id,naam,count(schenkingen.id) as aantal,
+                sum(bedrag) as totaal
+                from mensen inner join schenkingen
+                on mensen.id = schenkingen.vanMensId
+                group by mensen.id
+                order by mensen.id
+                """;
+        return jdbcClient.sql(sql)
+                .query(SchenkStatistiekPerMens.class)
+                .list();
     }
 }

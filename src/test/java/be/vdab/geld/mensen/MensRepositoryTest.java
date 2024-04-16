@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @JdbcTest
 @Import(MensRepository.class)
-@Sql("/mensen.sql")
+@Sql({"/mensen.sql", "/schenkingen.sql"})
 public class MensRepositoryTest {
     private final MensRepository mensRepository;
     private final JdbcClient jdbcClient;
@@ -110,5 +110,28 @@ public class MensRepositoryTest {
                 .extracting(Mens::getGeld)
                 .allSatisfy(geld -> assertThat(geld).isBetween(van, tot))
                 .isSorted();
+    }
+
+    private long idVanTestMens2() {
+        return jdbcClient.sql(
+                        "select id from mensen where naam = 'test2'")
+                .query(Long.class)
+                .single();
+    }
+
+    @Test
+    void findSchenkStatiestiekPerMensVindtDeJuisteData() {
+        var statistiek = mensRepository.findSchenkStatistiekPerMens();
+        assertThat(statistiek).hasSize(jdbcClient.sql(
+                                "select count(distinct vanMensId) from schenkingen")
+                        .query(Integer.class).single())
+                .extracting(statistiekRij -> statistiekRij.id()).isSorted();
+        var idVanMens2 = idVanTestMens2();
+        assertThat(statistiek).anySatisfy(eenItem -> {
+            assertThat(eenItem.id()).isEqualTo(idVanMens2);
+            assertThat(eenItem.naam()).isEqualTo("test2");
+            assertThat(eenItem.aantal()).isEqualTo(2);
+            assertThat(eenItem.totaal()).isEqualByComparingTo("300");
+        });
     }
 }
